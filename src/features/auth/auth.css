@@ -1,0 +1,125 @@
+/* Página del login */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #FAF7F2;
+}
+
+/* Tarjeta principal */
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    background-color: #FFFFFF;
+    border: 1px solid #E7E1D8;
+    border-radius: 18px;
+    padding: 40px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Encabezado */
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h1 {
+    color: #2F5D50;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+}
+
+.auth-header p {
+    color: #5F6368;
+    font-size: .95rem;
+    line-height: 1.5;
+}
+
+/* Agrupa cada label con su input */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    color: #5F6368;
+    font-size: .9rem;
+    font-weight: 600;
+    margin-bottom: .5rem;
+}
+
+/* Campos del formulario */
+.form-group input {
+    padding: .9rem 1rem;
+    border: 1px solid #D8D2C8;
+    border-radius: 12px;
+    background-color: #F7F4EF;
+    color: #5F6368;
+    font-size: .95rem;
+    transition: border-color .2s ease;
+}
+
+.form-group input::placeholder {
+    color: #9B9B9B;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2F5D50;
+}
+
+/* Recuperar contraseña */
+.forgot-password {
+    text-align: right;
+    margin-bottom: 1.8rem;
+}
+
+.forgot-password a {
+    color: #2F5D50;
+    font-size: .9rem;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+/* Botón */
+.login-button {
+    width: 100%;
+    padding: .95rem;
+    border: none;
+    border-radius: 12px;
+    background-color: #2F5D50;
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+.login-button:hover {
+    background-color: #274D43;
+}
+
+/* Información sobre el acceso al sistema */
+.register-link {
+    margin-top: 1.8rem;
+    text-align: center;
+}
+
+.register-link p {
+    color: #5F6368;
+    font-size: .95rem;
+    margin-bottom: .3rem;
+}
+
+.register-link span {
+    color: #2F5D50;
+    font-size: .9rem;
+    font-weight: 600;
+}
