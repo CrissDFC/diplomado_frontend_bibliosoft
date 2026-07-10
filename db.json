@@ -1,0 +1,65 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Administrador Biblioteca",
+      "email": "admin@biblioteca.com",
+      "password": "123456",
+      "role": 1,
+      "status": 1
+    }
+  ],
+  "books": [
+    {
+      "id": "1",
+      "title": "Cien anos de soledad",
+      "author": "Gabriel Garcia Marquez",
+      "isbn": "9780307474728",
+      "category": "Novela",
+      "publisher": "Sudamericana",
+      "year": 1967,
+      "totalCopies": 5,
+      "availableCopies": 5,
+      "status": 0,
+      "description": "Novela representativa de la literatura latinoamericana."
+    },
+    {
+      "id": "2",
+      "title": "El principito",
+      "author": "Antoine de Saint-Exupery",
+      "isbn": "9780156012195",
+      "category": "Infantil",
+      "publisher": "Reynal & Hitchcock",
+      "year": 1943,
+      "totalCopies": 3,
+      "availableCopies": 2,
+      "status": 1,
+      "description": "Historia corta sobre amistad, imaginacion y aprendizaje."
+    },
+    {
+      "id": "3",
+      "title": "Clean Code",
+      "author": "Robert C. Martin",
+      "isbn": "9780132350884",
+      "category": "Programacion",
+      "publisher": "Prentice Hall",
+      "year": 2008,
+      "totalCopies": 2,
+      "availableCopies": 0,
+      "status": 2,
+      "description": "Libro sobre buenas practicas de desarrollo de software."
+    }
+  ],
+  "loans": [
+    {
+      "id": "1",
+      "bookId": "3",
+      "userId": "1",
+      "loanDate": "2026-07-08",
+      "dueDate": "2026-07-15",
+      "returnDate": null,
+      "status": 1
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
