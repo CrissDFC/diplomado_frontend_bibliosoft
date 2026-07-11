@@ -1,8 +1,12 @@
+import UserForm from './components/UserForm'
+
 function UsersPage() {
     return (
         <section>
-            <h1>Usuarios</h1>
-            <p>Módulo pendiente para gestión de usuarios.</p>
+            <h1>Gestión de usuarios</h1>
+            <p>Crear nuevo usuario</p>
+
+            <UserForm />
         </section>
     )
 }

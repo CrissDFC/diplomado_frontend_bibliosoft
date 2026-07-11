@@ -7,6 +7,14 @@
       "password": "123456",
       "role": 1,
       "status": 1
+    },
+    {
+      "name": "Juan Pérez",
+      "email": "juan@gmail.com",
+      "password": "123456",
+      "role": 2,
+      "status": 1,
+      "id": "n5PDDW0_xhw"
     }
   ],
   "books": [

@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { login } from '../authService'
 
 function LoginForm() {
+
+    const navigate = useNavigate()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,6 +24,8 @@ function LoginForm() {
             }
 
             console.log('Usuario autenticado:', user)
+
+            navigate('/libros')
 
         } catch (error) {
             setError(error.message)
