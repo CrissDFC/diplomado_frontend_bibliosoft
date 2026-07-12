@@ -1,10 +1,3 @@
-function LoansPage() {
-    return (
-        <section>
-            <h1>Préstamos</h1>
-            <p>Módulo pendiente para gestión de préstamos.</p>
-        </section>
-    )
-}
+import LoansListPage from './pages/LoansListPage'
 
-export default LoansPage
+export default LoansListPage

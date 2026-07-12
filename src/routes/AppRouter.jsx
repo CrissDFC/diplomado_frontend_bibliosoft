@@ -1,6 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import LoginPage from '../features/auth/LoginPage'
-import LoansPage from '../features/loans/LoansPage'
+import LoanDetailPage from '../features/loans/pages/LoanDetailPage'
+import LoanEditPage from '../features/loans/pages/LoanEditPage'
+import LoanFormPage from '../features/loans/pages/LoanFormPage'
+import LoansListPage from '../features/loans/pages/LoansListPage'
 import UsersPage from '../features/users/UsersPage'
 import MainLayout from '../layouts/MainLayout'
 import ProtectedRoute from './ProtectedRoute'
@@ -29,7 +32,10 @@ function AppRouter() {
                     <Route path="libros/nuevo" element={<BookFormPage />} />
                     <Route path="libros/:id" element={<BookDetailPage />} />
                     <Route path="libros/:id/editar" element={<BookEditPage />} />
-                    <Route path="prestamos" element={<LoansPage />} />
+                    <Route path="prestamos" element={<LoansListPage />} />
+                    <Route path="prestamos/nuevo" element={<LoanFormPage />} />
+                    <Route path="prestamos/:id" element={<LoanDetailPage />} />
+                    <Route path="prestamos/:id/editar" element={<LoanEditPage />} />
                     <Route path="usuarios" element={<UsersPage />} />
                 </Route>
 
