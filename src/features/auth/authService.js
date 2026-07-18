@@ -1,24 +1,22 @@
-const API_URL = 'http://localhost:3001/users'
+import { apiRequest } from '../../services/api.js'
+import { saveSession } from './session.js'
 
 export async function login(email, password) {
-    try {
-        const response = await fetch(API_URL)
+    const session = await apiRequest('/auth/login', {
+        method: 'POST',
+        body: { email, password },
+    })
+    saveSession(session)
+    return session.user
+}
 
-        if (!response.ok) {
-            throw new Error('No fue posible consultar los usuarios.')
-        }
+export function register(user) {
+    return apiRequest('/auth/register', {
+        method: 'POST',
+        body: user,
+    })
+}
 
-        const users = await response.json()
-
-        const user = users.find((user) =>
-            user.email === email &&
-            user.password === password &&
-            user.status === 1
-        )
-
-        return user ?? null
-
-    } catch (error) {
-        throw new Error(error.message)
-    }
+export function getCurrentUser() {
+    return apiRequest('/auth/me')
 }

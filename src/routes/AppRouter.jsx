@@ -11,6 +11,7 @@ import BooksListPage from '../features/books/pages/BooksListPage'
 import BookFormPage from '../features/books/pages/BookFormPage'
 import BookEditPage from '../features/books/pages/BookEditPage'
 import BookDetailPage from '../features/books/pages/BookDetailPage'
+import RegisterPage from '../features/auth/RegisterPage'
 
 
 function AppRouter() {
@@ -18,6 +19,7 @@ function AppRouter() {
         <BrowserRouter>
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/registro" element={<RegisterPage />} />
 
                 <Route
                     path="/"
@@ -29,14 +31,24 @@ function AppRouter() {
                 >
                     <Route index element={<Navigate to="/libros" replace />} />
                     <Route path="libros" element={<BooksListPage />} />
-                    <Route path="libros/nuevo" element={<BookFormPage />} />
+                    <Route path="libros/nuevo" element={(
+                        <ProtectedRoute allowedRoles={['admin', 'librarian']}><BookFormPage /></ProtectedRoute>
+                    )} />
                     <Route path="libros/:id" element={<BookDetailPage />} />
-                    <Route path="libros/:id/editar" element={<BookEditPage />} />
+                    <Route path="libros/:id/editar" element={(
+                        <ProtectedRoute allowedRoles={['admin', 'librarian']}><BookEditPage /></ProtectedRoute>
+                    )} />
                     <Route path="prestamos" element={<LoansListPage />} />
-                    <Route path="prestamos/nuevo" element={<LoanFormPage />} />
+                    <Route path="prestamos/nuevo" element={(
+                        <ProtectedRoute allowedRoles={['admin', 'librarian']}><LoanFormPage /></ProtectedRoute>
+                    )} />
                     <Route path="prestamos/:id" element={<LoanDetailPage />} />
-                    <Route path="prestamos/:id/editar" element={<LoanEditPage />} />
-                    <Route path="usuarios" element={<UsersPage />} />
+                    <Route path="prestamos/:id/editar" element={(
+                        <ProtectedRoute allowedRoles={['admin', 'librarian']}><LoanEditPage /></ProtectedRoute>
+                    )} />
+                    <Route path="usuarios" element={(
+                        <ProtectedRoute allowedRoles={['admin']}><UsersPage /></ProtectedRoute>
+                    )} />
                 </Route>
 
                 <Route path="*" element={<Navigate to="/libros" replace />} />

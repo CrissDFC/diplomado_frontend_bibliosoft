@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "api": "json-server --watch db.json --port 3001",
+    "test": "node --test src/features/auth/*.test.js src/services/*.test.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

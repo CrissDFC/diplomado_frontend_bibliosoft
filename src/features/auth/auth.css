@@ -123,3 +123,14 @@
     font-size: .9rem;
     font-weight: 600;
 }
+
+.register-link a {
+    color: #2F5D50;
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.form-group small {
+    color: #737373;
+    margin-top: .35rem;
+}

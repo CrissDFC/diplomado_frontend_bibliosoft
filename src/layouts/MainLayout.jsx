@@ -1,21 +1,30 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { clearSession, getSession } from '../features/auth/session'
 
 function MainLayout() {
-    return (
-        <div>
-            <header>
-                <h1>Biblioteca</h1>
+    const navigate = useNavigate()
+    const user = getSession()?.user
 
-                <nav>
+    function logout() {
+        clearSession()
+        navigate('/login', { replace: true })
+    }
+
+    return (
+        <div className="app-shell">
+            <header className="app-header">
+                <Link className="brand" to="/libros">SIGEB</Link>
+                <nav aria-label="Navegación principal">
                     <Link to="/libros">Libros</Link>
                     <Link to="/prestamos">Préstamos</Link>
-                    <Link to="/usuarios">Usuarios</Link>
+                    {user?.roleName === 'admin' && <Link to="/usuarios">Usuarios</Link>}
                 </nav>
+                <div className="session-actions">
+                    <span>{user?.name}</span>
+                    <button type="button" onClick={logout}>Cerrar sesión</button>
+                </div>
             </header>
-
-            <main>
-                <Outlet />
-            </main>
+            <main className="app-content"><Outlet /></main>
         </div>
     )
 }
