@@ -7,6 +7,30 @@
       "password": "123456",
       "role": 1,
       "status": 1
+    },
+    {
+      "name": "Juan Pérez",
+      "email": "juan@gmail.com",
+      "password": "123456",
+      "role": 2,
+      "status": 0,
+      "id": "n5PDDW0_xhw"
+    },
+    {
+      "name": "Sofia Molina",
+      "email": "Sirleysofiaml@gmail.com",
+      "password": "sofia",
+      "role": 2,
+      "status": 1,
+      "id": "h_XEE2CYSUQ"
+    },
+    {
+      "name": "Sirley",
+      "email": "sirley@gmail.com",
+      "password": "1111",
+      "role": 2,
+      "status": 1,
+      "id": "5BiXBBQ1rgg"
     }
   ],
   "books": [

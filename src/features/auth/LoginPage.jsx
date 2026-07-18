@@ -1,9 +1,26 @@
+import './auth.css'
+import LoginForm from './components/LoginForm'
+
 function LoginPage() {
+
     return (
-        <section>
-            <h1>Iniciar sesión</h1>
-            <p>Pantalla base para autenticación.</p>
-        </section>
+        <main className="auth-page">
+
+            <section className="auth-card">
+
+                <div className="auth-header">
+                    <h1>SIGEB</h1>
+
+                    <p>
+                        Sistema de Gestión Bibliotecaria
+                    </p>
+                </div>
+
+                <LoginForm />
+
+            </section>
+
+        </main>
     )
 }
 
