@@ -23,7 +23,7 @@ a:hover { color: #173d34; }
 .app-header nav a:hover, .app-header nav a.active { background: rgb(255 255 255 / 14%); color: #fff; }
 .session-actions { display: flex; align-items: center; gap: .75rem; }
 .session-actions span { max-width: 12rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.app-content { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; }
+.app-content { min-width: 0; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; }
 .app-footer { padding: 1.25rem; text-align: center; background: #1d3f36; color: #d9e8e2; }
 .app-footer p { margin: 0; }
 
