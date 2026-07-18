@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { LOAN_STATUS } from '../../../constants/statuses'
 import { getBookById } from '../../books/bookService'
 import { getLoanById, getUserById } from '../loanService'
+import { getSession } from '../../auth/session'
 
 const LOAN_STATUS_LABELS = {
     [LOAN_STATUS.CANCELLED]: 'Cancelado',
@@ -18,6 +19,8 @@ function LoanDetailPage() {
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
+    const role = getSession()?.user.roleName
+    const canManage = role === 'admin' || role === 'librarian'
 
     useEffect(() => {
         async function loadLoan() {
@@ -78,7 +81,7 @@ function LoanDetailPage() {
 
             <div>
                 <Link to="/prestamos">Volver</Link>
-                <Link to={`/prestamos/${loan.id}/editar`}>Editar</Link>
+                {canManage && <Link to={`/prestamos/${loan.id}/editar`}>Editar</Link>}
             </div>
         </section>
     )

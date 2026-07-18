@@ -1,72 +1,19 @@
-const API_URL = import.meta.env.VITE_API_URL
+import { apiRequest } from '../../services/api.js'
 
-export async function getBooks() {
-    const response = await fetch(`${API_URL}/books`)
+export const getBooks = () => apiRequest('/books')
 
-    if (!response.ok) {
-        throw new Error('No se pudieron cargar los libros')
-    }
+export const getBookById = (id) => apiRequest(`/books/${id}`)
 
-    return response.json()
-}
+export const createBook = (book) => apiRequest('/books', {
+    method: 'POST',
+    body: book,
+})
 
-export async function getBookById(id) {
-    const response = await fetch(`${API_URL}/books/${id}`)
+export const updateBook = (id, book) => apiRequest(`/books/${id}`, {
+    method: 'PUT',
+    body: book,
+})
 
-    if (!response.ok) {
-        throw new Error('No se pudo cargar el libro')
-    }
-
-    return response.json()
-}
-
-export async function createBook(book) {
-    const response = await fetch(`${API_URL}/books`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(book),
-    })
-
-    if (!response.ok) {
-        throw new Error('No se pudo crear el libro')
-    }
-
-    return response.json()
-}
-
-export async function updateBook(id, book) {
-    const response = await fetch(`${API_URL}/books/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(book),
-    })
-
-    if (!response.ok) {
-        throw new Error('No se pudo actualizar el libro')
-    }
-
-    return response.json()
-}
-
-export async function disableBook(book) {
-    const response = await fetch(`${API_URL}/books/${book.id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            ...book,
-            status: 0,
-        }),
-    })
-
-    if (!response.ok) {
-        throw new Error('No se pudo inactivar el libro')
-    }
-
-    return response.json()
-}
+export const disableBook = (book) => apiRequest(`/books/${book.id}`, {
+    method: 'DELETE',
+})

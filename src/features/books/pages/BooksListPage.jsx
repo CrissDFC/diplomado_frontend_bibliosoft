@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import BookFilters from '../components/BookFilters'
 import BookTable from '../components/BookTable'
 import { disableBook, getBooks } from '../bookService'
+import { getSession } from '../../auth/session'
 
 function BooksListPage() {
     const [books, setBooks] = useState([])
@@ -12,6 +13,8 @@ function BooksListPage() {
         search: '',
         status: '',
     })
+    const role = getSession()?.user.roleName
+    const canManage = role === 'admin' || role === 'librarian'
 
     useEffect(() => {
         loadBooks()
@@ -77,7 +80,7 @@ function BooksListPage() {
             </div>
 
             <div>
-                <Link to="/libros/nuevo">Nuevo libro</Link>
+                {canManage && <Link to="/libros/nuevo">Nuevo libro</Link>}
             </div>
 
             <BookFilters filters={filters} onFilterChange={handleFilterChange} />
@@ -89,7 +92,7 @@ function BooksListPage() {
             {!isLoading && !errorMessage && (
                 <section>
                     <h2>Listado de libros</h2>
-                    <BookTable books={filteredBooks} onDisableBook={handleDisableBook} />
+                    <BookTable books={filteredBooks} canManage={canManage} onDisableBook={handleDisableBook} />
                 </section>
             )}
         </section>

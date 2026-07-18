@@ -73,7 +73,7 @@ function UsersPage() {
         setFormData({
             name: user.name,
             email: user.email,
-            password: user.password,
+            password: '',
             role: user.role,
             status: user.status,
         })
@@ -174,6 +174,7 @@ function UsersPage() {
                     onInputChange={handleInputChange}
                     onSubmit={handleSubmit}
                     isSubmitting={isSubmitting}
+                    isEditing={Boolean(editingUser)}
                     submitLabel={
                         editingUser
                             ? 'Actualizar usuario'

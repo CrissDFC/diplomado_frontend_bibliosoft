@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BOOK_STATUS, LOAN_STATUS, USER_STATUS } from '../../../constants/statuses'
-import { getBooks, updateBook } from '../../books/bookService'
+import { BOOK_STATUS, USER_STATUS } from '../../../constants/statuses'
+import { getBooks } from '../../books/bookService'
 import LoanForm from '../components/LoanForm'
 import { createLoan, getUsers } from '../loanService'
 
@@ -9,10 +9,6 @@ const initialFormData = {
     bookId: '',
     userId: '',
     dueDate: '',
-}
-
-function getTodayDate() {
-    return new Date().toISOString().slice(0, 10)
 }
 
 function getDefaultDueDate() {
@@ -68,32 +64,10 @@ function LoanFormPage() {
                 throw new Error('Debes completar libro, usuario y fecha de devolucion')
             }
 
-            const selectedBook = books.find((book) => book.id === formData.bookId)
-
-            if (!selectedBook) {
-                throw new Error('El libro seleccionado no existe')
-            }
-
-            if (selectedBook.availableCopies <= 0) {
-                throw new Error('No hay ejemplares disponibles para prestar')
-            }
-
             await createLoan({
-                bookId: formData.bookId,
-                userId: formData.userId,
-                loanDate: getTodayDate(),
+                bookId: Number(formData.bookId),
+                userId: Number(formData.userId),
                 dueDate: formData.dueDate,
-                returnDate: null,
-                status: LOAN_STATUS.ACTIVE,
-            })
-
-            await updateBook(selectedBook.id, {
-                ...selectedBook,
-                availableCopies: selectedBook.availableCopies - 1,
-                status:
-                    selectedBook.availableCopies - 1 > 0
-                        ? BOOK_STATUS.AVAILABLE
-                        : BOOK_STATUS.UNAVAILABLE,
             })
 
             navigate('/prestamos')

@@ -1,41 +1,24 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BOOK_STATUS, LOAN_STATUS } from '../../../constants/statuses'
-import { getBooks, updateBook } from '../../books/bookService'
+import { getSession } from '../../auth/session'
 import LoanFilters from '../components/LoanFilters'
 import LoanTable from '../components/LoanTable'
-import { getLoans, getUsers, updateLoan } from '../loanService'
-
-function getTodayDate() {
-    return new Date().toISOString().slice(0, 10)
-}
+import { cancelLoan, getLoans, returnLoan } from '../loanService'
 
 function LoansListPage() {
     const [loans, setLoans] = useState([])
-    const [books, setBooks] = useState([])
-    const [users, setUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
-    const [filters, setFilters] = useState({
-        search: '',
-        status: '',
-    })
+    const [filters, setFilters] = useState({ search: '', status: '' })
+    const role = getSession()?.user.roleName
+    const canManage = role === 'admin' || role === 'librarian'
 
-    useEffect(() => {
-        loadData()
-    }, [])
+    useEffect(() => { loadLoans() }, [])
 
-    async function loadData() {
+    async function loadLoans() {
         try {
-            const [loansData, booksData, usersData] = await Promise.all([
-                getLoans(),
-                getBooks(),
-                getUsers(),
-            ])
-
-            setLoans(loansData)
-            setBooks(booksData)
-            setUsers(usersData)
+            setErrorMessage('')
+            setLoans(await getLoans())
         } catch (error) {
             setErrorMessage(error.message)
         } finally {
@@ -44,94 +27,56 @@ function LoansListPage() {
     }
 
     function handleFilterChange(event) {
-        const { name, value } = event.target
-
-        setFilters((currentFilters) => ({
-            ...currentFilters,
-            [name]: value,
-        }))
+        setFilters((current) => ({ ...current, [event.target.name]: event.target.value }))
     }
 
     async function handleReturnLoan(loan) {
-        const shouldReturn = window.confirm('¿Confirmas la devolucion de este prestamo?')
-
-        if (!shouldReturn) {
-            return
-        }
-
+        if (!window.confirm('¿Confirmas la devolución de este préstamo?')) return
         try {
-            const book = books.find((currentBook) => currentBook.id === loan.bookId)
-
-            if (!book) {
-                throw new Error('No se encontro el libro asociado al prestamo')
-            }
-
-            await updateLoan(loan.id, {
-                ...loan,
-                returnDate: getTodayDate(),
-                status: LOAN_STATUS.RETURNED,
-            })
-
-            await updateBook(book.id, {
-                ...book,
-                availableCopies: Math.min(book.totalCopies, book.availableCopies + 1),
-                status: book.status === BOOK_STATUS.INACTIVE ? book.status : BOOK_STATUS.AVAILABLE,
-            })
-
-            await loadData()
+            await returnLoan(loan.id)
+            await loadLoans()
         } catch (error) {
             setErrorMessage(error.message)
         }
     }
 
-    const loanRows = useMemo(() => {
-        return loans.map((loan) => {
-            const book = books.find((currentBook) => currentBook.id === loan.bookId)
-            const user = users.find((currentUser) => currentUser.id === loan.userId)
+    async function handleCancelLoan(loan) {
+        if (!window.confirm('¿Confirmas la cancelación de este préstamo?')) return
+        try {
+            await cancelLoan(loan.id)
+            await loadLoans()
+        } catch (error) {
+            setErrorMessage(error.message)
+        }
+    }
 
-            return {
-                ...loan,
-                bookTitle: book ? book.title : 'Libro no encontrado',
-                userName: user ? user.name : 'Usuario no encontrado',
-            }
-        })
-    }, [loans, books, users])
-
-    const filteredLoans = useMemo(() => {
-        return loanRows.filter((loan) => {
-            const searchText = filters.search.toLowerCase()
-            const matchesSearch =
-                loan.bookTitle.toLowerCase().includes(searchText) ||
-                loan.userName.toLowerCase().includes(searchText)
-
-            const matchesStatus =
-                filters.status === '' || loan.status === Number(filters.status)
-
-            return matchesSearch && matchesStatus
-        })
-    }, [loanRows, filters])
+    const filteredLoans = useMemo(() => loans.filter((loan) => {
+        const search = filters.search.toLowerCase()
+        const matchesSearch = (loan.bookTitle || '').toLowerCase().includes(search)
+            || (loan.userName || '').toLowerCase().includes(search)
+        const matchesStatus = filters.status === '' || loan.status === Number(filters.status)
+        return matchesSearch && matchesStatus
+    }), [loans, filters])
 
     return (
         <section>
             <div>
-                <h1>Gestion de prestamos</h1>
-                <p>Consulta y administracion de prestamos de libros.</p>
+                <h1>Gestión de préstamos</h1>
+                <p>Consulta y administración de préstamos de libros.</p>
             </div>
-
-            <div>
-                <Link to="/prestamos/nuevo">Nuevo prestamo</Link>
-            </div>
-
+            {canManage && <div><Link to="/prestamos/nuevo">Nuevo préstamo</Link></div>}
             <LoanFilters filters={filters} onFilterChange={handleFilterChange} />
-
-            {isLoading && <p>Cargando prestamos...</p>}
-
+            {isLoading && <p>Cargando préstamos...</p>}
             {errorMessage && <p>{errorMessage}</p>}
-
             {!isLoading && !errorMessage && (
                 <section>
-                    <h2>Listado de prestamos</h2>
-                    <LoanTable loans={filteredLoans} onReturnLoan={handleReturnLoan} />
+                    <h2>Listado de préstamos</h2>
+                    <LoanTable
+                        loans={filteredLoans}
+                        canManage={canManage}
+                        onReturnLoan={handleReturnLoan}
+                        onCancelLoan={handleCancelLoan}
+                    />
                 </section>
             )}
         </section>

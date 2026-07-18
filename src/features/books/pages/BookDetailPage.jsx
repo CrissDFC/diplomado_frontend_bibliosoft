@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { BOOK_STATUS_LABELS } from '../../../constants/statuses'
 import { getBookById } from '../bookService'
+import { getSession } from '../../auth/session'
 
 function BookDetailPage() {
     const { id } = useParams()
     const [book, setBook] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
+    const role = getSession()?.user.roleName
+    const canManage = role === 'admin' || role === 'librarian'
 
     useEffect(() => {
         async function loadBook() {
@@ -69,7 +72,7 @@ function BookDetailPage() {
 
             <div>
                 <Link to="/libros">Volver</Link>
-                <Link to={`/libros/${book.id}/editar`}>Editar</Link>
+                {canManage && <Link to={`/libros/${book.id}/editar`}>Editar</Link>}
             </div>
         </section>
     )

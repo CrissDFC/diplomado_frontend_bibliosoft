@@ -8,7 +8,7 @@ const LOAN_STATUS_LABELS = {
     [LOAN_STATUS.OVERDUE]: 'Vencido',
 }
 
-function LoanTable({ loans, onReturnLoan }) {
+function LoanTable({ loans, canManage, onReturnLoan, onCancelLoan }) {
     if (loans.length === 0) {
         return <p>No hay prestamos registrados.</p>
     }
@@ -39,13 +39,13 @@ function LoanTable({ loans, onReturnLoan }) {
                         <td>
                             <Link to={`/prestamos/${loan.id}`}>Ver</Link>
                             {' '}
-                            <Link to={`/prestamos/${loan.id}/editar`}>Editar</Link>
-                            {' '}
-                            {loan.status === LOAN_STATUS.ACTIVE && (
-                                <button type="button" onClick={() => onReturnLoan(loan)}>
-                                    Devolver
-                                </button>
-                            )}
+                            {canManage && <>
+                                {' '}<Link to={`/prestamos/${loan.id}/editar`}>Editar</Link>
+                                {loan.status === LOAN_STATUS.ACTIVE && <>
+                                    {' '}<button type="button" onClick={() => onReturnLoan(loan)}>Devolver</button>
+                                    {' '}<button type="button" onClick={() => onCancelLoan(loan)}>Cancelar</button>
+                                </>}
+                            </>}
                         </td>
                     </tr>
                 ))}

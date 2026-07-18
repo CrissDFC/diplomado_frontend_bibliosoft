@@ -1,3 +1,5 @@
+import { USER_ROLE_LABELS } from '../../../constants/roles'
+
 function UserTable({
     users,
     onEditUser,
@@ -32,9 +34,7 @@ function UserTable({
                         <td>{user.email}</td>
 
                         <td>
-                            {user.role === 1
-                                ? 'Administrador'
-                                : 'Bibliotecario'}
+                            {USER_ROLE_LABELS[user.role] || 'Desconocido'}
                         </td>
 
                         <td>

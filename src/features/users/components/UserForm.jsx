@@ -3,6 +3,7 @@ function UserForm({
     onInputChange,
     onSubmit,
     isSubmitting,
+    isEditing,
     submitLabel = 'Guardar usuario',
 }) {
 
@@ -47,8 +48,9 @@ function UserForm({
                     type="password"
                     value={formData.password}
                     onChange={onInputChange}
-                    placeholder="Ingrese la contraseña"
-                    required
+                    placeholder={isEditing ? 'Dejar vacío para conservarla' : 'Ingrese la contraseña'}
+                    required={!isEditing}
+                    minLength={formData.password ? 8 : undefined}
                 />
             </div>
 
@@ -63,6 +65,7 @@ function UserForm({
                 >
                     <option value={1}>Administrador</option>
                     <option value={2}>Bibliotecario</option>
+                    <option value={3}>Lector</option>
                 </select>
             </div>
 

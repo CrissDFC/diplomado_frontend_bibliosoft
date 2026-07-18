@@ -9,7 +9,6 @@ const initialFormData = {
 function LoanEditPage() {
     const { id } = useParams()
     const navigate = useNavigate()
-    const [loan, setLoan] = useState(null)
     const [formData, setFormData] = useState(initialFormData)
     const [isLoading, setIsLoading] = useState(true)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -19,7 +18,6 @@ function LoanEditPage() {
         async function loadLoan() {
             try {
                 const loanData = await getLoanById(id)
-                setLoan(loanData)
                 setFormData({
                     dueDate: loanData.dueDate,
                 })
@@ -48,10 +46,7 @@ function LoanEditPage() {
         setErrorMessage('')
 
         try {
-            await updateLoan(id, {
-                ...loan,
-                dueDate: formData.dueDate,
-            })
+            await updateLoan(id, { dueDate: formData.dueDate })
 
             navigate('/prestamos')
         } catch (error) {

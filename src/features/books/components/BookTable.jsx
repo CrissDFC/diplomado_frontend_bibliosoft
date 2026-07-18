@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { BOOK_STATUS, BOOK_STATUS_LABELS } from '../../../constants/statuses'
 
-function BookTable({ books, onDisableBook }) {
+function BookTable({ books, canManage, onDisableBook }) {
     if (books.length === 0) {
         return <p>No hay libros registrados.</p>
     }
@@ -34,13 +34,13 @@ function BookTable({ books, onDisableBook }) {
                     <td>
                         <Link to={`/libros/${book.id}`}>Ver</Link>
                         {' '}
-                        <Link to={`/libros/${book.id}/editar`}>Editar</Link>
-                        {' '}
-                        {book.status !== BOOK_STATUS.INACTIVE && (
+                        {canManage && <>
+                        {' '}<Link to={`/libros/${book.id}/editar`}>Editar</Link>
+                        {' '}{book.status !== BOOK_STATUS.INACTIVE && (
                             <button type="button" onClick={() => onDisableBook(book)}>
                                 Inactivar
                             </button>
-                        )}
+                        )}</>}
                     </td>
                 </tr>
             ))}
