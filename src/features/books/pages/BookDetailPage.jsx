@@ -3,6 +3,9 @@ import { Link, useParams } from 'react-router-dom'
 import { BOOK_STATUS_LABELS } from '../../../constants/statuses'
 import { getBookById } from '../bookService'
 import { getSession } from '../../auth/session'
+import Alert from '../../../components/ui/Alert'
+import Card from '../../../components/ui/Card'
+import Loader from '../../../components/ui/Loader'
 
 function BookDetailPage() {
     const { id } = useParams()
@@ -28,15 +31,15 @@ function BookDetailPage() {
     }, [id])
 
     if (isLoading) {
-        return <p>Cargando libro...</p>
+        return <Loader message="Cargando libro..." />
     }
 
     if (errorMessage) {
-        return <p>{errorMessage}</p>
+        return <Alert>{errorMessage}</Alert>
     }
 
     return (
-        <section>
+        <Card>
             <div>
                 <h1>{book.title}</h1>
                 <p>Detalle del libro registrado en la biblioteca.</p>
@@ -74,7 +77,7 @@ function BookDetailPage() {
                 <Link to="/libros">Volver</Link>
                 {canManage && <Link to={`/libros/${book.id}/editar`}>Editar</Link>}
             </div>
-        </section>
+        </Card>
     )
 }
 

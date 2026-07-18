@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import BookForm from '../components/BookForm'
 import { getBookById, updateBook } from '../bookService'
+import Alert from '../../../components/ui/Alert'
+import Card from '../../../components/ui/Card'
+import Loader from '../../../components/ui/Loader'
 
 const initialFormData = {
     title: '',
@@ -78,17 +81,17 @@ function BookEditPage() {
     }
 
     if (isLoading) {
-        return <p>Cargando libro...</p>
+        return <Loader message="Cargando libro..." />
     }
 
     return (
-        <section>
+        <Card>
             <div>
                 <h1>Editar libro</h1>
                 <p>Actualiza la información general del libro.</p>
             </div>
 
-            {errorMessage && <p>{errorMessage}</p>}
+            <Alert>{errorMessage}</Alert>
 
             <BookForm
                 formData={formData}
@@ -98,7 +101,7 @@ function BookEditPage() {
                 showTotalCopies={false}
                 submitLabel="Actualizar libro"
             />
-        </section>
+        </Card>
     )
 }
 

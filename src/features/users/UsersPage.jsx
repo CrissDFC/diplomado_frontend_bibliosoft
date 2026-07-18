@@ -9,6 +9,9 @@ import {
     getUsers,
     updateUser,
 } from './userService'
+import Alert from '../../components/ui/Alert'
+import Card from '../../components/ui/Card'
+import Loader from '../../components/ui/Loader'
 
 const initialFormData = {
     name: '',
@@ -155,9 +158,7 @@ function UsersPage() {
 
     return (
 
-        <main className="users-page">
-
-            <section className="users-card">
+        <Card className="users-card">
 
                 <div className="users-header">
 
@@ -186,9 +187,9 @@ function UsersPage() {
 
                 <h2>Listado de usuarios</h2>
 
-                {isLoading && <p>Cargando usuarios...</p>}
+                {isLoading && <Loader message="Cargando usuarios..." />}
 
-                {errorMessage && <p>{errorMessage}</p>}
+                <Alert>{errorMessage}</Alert>
 
                 {!isLoading && !errorMessage && (
 
@@ -200,9 +201,7 @@ function UsersPage() {
 
                 )}
 
-            </section>
-
-        </main>
+        </Card>
 
     )
 }

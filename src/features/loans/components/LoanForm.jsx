@@ -1,3 +1,5 @@
+import Button from '../../../components/ui/Button'
+
 function LoanForm({
     formData,
     books,
@@ -57,9 +59,9 @@ function LoanForm({
                 />
             </div>
 
-            <button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Guardando...' : submitLabel}
-            </button>
+            </Button>
         </form>
     )
 }

@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getLoanById, updateLoan } from '../loanService'
+import Alert from '../../../components/ui/Alert'
+import Button from '../../../components/ui/Button'
+import Card from '../../../components/ui/Card'
+import Loader from '../../../components/ui/Loader'
 
 const initialFormData = {
     dueDate: '',
@@ -57,17 +61,17 @@ function LoanEditPage() {
     }
 
     if (isLoading) {
-        return <p>Cargando prestamo...</p>
+        return <Loader message="Cargando préstamo..." />
     }
 
     return (
-        <section>
+        <Card>
             <div>
                 <h1>Editar prestamo</h1>
                 <p>Actualiza la fecha limite del prestamo.</p>
             </div>
 
-            {errorMessage && <p>{errorMessage}</p>}
+            <Alert>{errorMessage}</Alert>
 
             <form onSubmit={handleSubmit}>
                 <div>
@@ -82,11 +86,11 @@ function LoanEditPage() {
                     />
                 </div>
 
-                <button type="submit" disabled={isSubmitting}>
+                <Button type="submit" disabled={isSubmitting}>
                     {isSubmitting ? 'Guardando...' : 'Actualizar prestamo'}
-                </button>
+                </Button>
             </form>
-        </section>
+        </Card>
     )
 }
 

@@ -4,6 +4,9 @@ import { getSession } from '../../auth/session'
 import LoanFilters from '../components/LoanFilters'
 import LoanTable from '../components/LoanTable'
 import { cancelLoan, getLoans, returnLoan } from '../loanService'
+import Alert from '../../../components/ui/Alert'
+import Card from '../../../components/ui/Card'
+import Loader from '../../../components/ui/Loader'
 
 function LoansListPage() {
     const [loans, setLoans] = useState([])
@@ -59,15 +62,15 @@ function LoansListPage() {
     }), [loans, filters])
 
     return (
-        <section>
+        <Card>
             <div>
                 <h1>Gestión de préstamos</h1>
                 <p>Consulta y administración de préstamos de libros.</p>
             </div>
             {canManage && <div><Link to="/prestamos/nuevo">Nuevo préstamo</Link></div>}
             <LoanFilters filters={filters} onFilterChange={handleFilterChange} />
-            {isLoading && <p>Cargando préstamos...</p>}
-            {errorMessage && <p>{errorMessage}</p>}
+            {isLoading && <Loader message="Cargando préstamos..." />}
+            <Alert>{errorMessage}</Alert>
             {!isLoading && !errorMessage && (
                 <section>
                     <h2>Listado de préstamos</h2>
@@ -79,7 +82,7 @@ function LoansListPage() {
                     />
                 </section>
             )}
-        </section>
+        </Card>
     )
 }
 

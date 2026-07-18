@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { BOOK_STATUS } from '../../../constants/statuses'
 import BookForm from '../components/BookForm'
 import { createBook } from '../bookService'
+import Alert from '../../../components/ui/Alert'
+import Card from '../../../components/ui/Card'
 
 const initialFormData = {
     title: '',
@@ -63,13 +65,13 @@ function BookFormPage() {
     }
 
     return (
-        <section>
+        <Card>
             <div>
                 <h1>Nuevo libro</h1>
                 <p>Registra un nuevo libro en el catálogo de la biblioteca.</p>
             </div>
 
-            {errorMessage && <p>{errorMessage}</p>}
+            <Alert>{errorMessage}</Alert>
 
             <BookForm
                 formData={formData}
@@ -77,7 +79,7 @@ function BookFormPage() {
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
             />
-        </section>
+        </Card>
     )
 }
 

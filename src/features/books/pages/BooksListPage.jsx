@@ -4,6 +4,9 @@ import BookFilters from '../components/BookFilters'
 import BookTable from '../components/BookTable'
 import { disableBook, getBooks } from '../bookService'
 import { getSession } from '../../auth/session'
+import Alert from '../../../components/ui/Alert'
+import Card from '../../../components/ui/Card'
+import Loader from '../../../components/ui/Loader'
 
 function BooksListPage() {
     const [books, setBooks] = useState([])
@@ -73,7 +76,7 @@ function BooksListPage() {
     })
 
     return (
-        <section>
+        <Card>
             <div>
                 <h1>Gestión de libros</h1>
                 <p>Consulta, registro y administración del catálogo de libros.</p>
@@ -85,9 +88,9 @@ function BooksListPage() {
 
             <BookFilters filters={filters} onFilterChange={handleFilterChange} />
 
-            {isLoading && <p>Cargando libros...</p>}
+            {isLoading && <Loader message="Cargando libros..." />}
 
-            {errorMessage && <p>{errorMessage}</p>}
+            <Alert>{errorMessage}</Alert>
 
             {!isLoading && !errorMessage && (
                 <section>
@@ -95,7 +98,7 @@ function BooksListPage() {
                     <BookTable books={filteredBooks} canManage={canManage} onDisableBook={handleDisableBook} />
                 </section>
             )}
-        </section>
+        </Card>
     )
 }
 

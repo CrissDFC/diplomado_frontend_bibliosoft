@@ -1,0 +1,92 @@
+:root {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #27332f;
+    background: #f4f1eb;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input, select, textarea { font: inherit; }
+a { color: #24584a; }
+a:hover { color: #173d34; }
+
+.app-shell { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+.app-header {
+    display: flex; align-items: center; gap: 2rem; padding: 1rem clamp(1rem, 4vw, 3rem);
+    background: #234d42; color: #fff; box-shadow: 0 2px 12px rgb(22 49 42 / 20%);
+}
+.brand { color: #fff; font-size: 1.35rem; font-weight: 800; text-decoration: none; letter-spacing: .04em; }
+.app-header nav { display: flex; gap: .5rem; flex: 1; }
+.app-header nav a { color: #e8f2ee; text-decoration: none; padding: .55rem .8rem; border-radius: .55rem; }
+.app-header nav a:hover, .app-header nav a.active { background: rgb(255 255 255 / 14%); color: #fff; }
+.session-actions { display: flex; align-items: center; gap: .75rem; }
+.session-actions span { max-width: 12rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app-content { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; }
+.app-footer { padding: 1.25rem; text-align: center; background: #1d3f36; color: #d9e8e2; }
+.app-footer p { margin: 0; }
+
+.card {
+    background: #fff; border: 1px solid #ded8cd; border-radius: 1rem; padding: clamp(1rem, 3vw, 2rem);
+    box-shadow: 0 8px 28px rgb(42 52 48 / 8%);
+}
+.card + .card, section + section { margin-top: 1.5rem; }
+h1, h2 { color: #234d42; }
+h1 { margin-top: 0; font-size: clamp(1.7rem, 4vw, 2.35rem); }
+h2 { font-size: 1.25rem; }
+
+form { display: grid; gap: 1rem; }
+label { display: block; margin-bottom: .4rem; color: #3c4c46; font-weight: 650; }
+input, select, textarea {
+    width: 100%; padding: .75rem .85rem; color: #27332f; background: #fcfbf8;
+    border: 1px solid #cfc8bd; border-radius: .65rem;
+}
+textarea { min-height: 7rem; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 3px solid rgb(47 111 94 / 18%); border-color: #2f6f5e; }
+
+.button, button {
+    border: 0; border-radius: .6rem; padding: .65rem .95rem; cursor: pointer;
+    background: #2f6f5e; color: #fff; font-weight: 700;
+}
+.button:hover, button:hover { background: #245748; }
+.button-secondary { color: #21493e; background: #eef6f2; }
+.button-secondary:hover { background: #dcece5; }
+.button:disabled, button:disabled { cursor: not-allowed; opacity: .58; }
+
+table { width: 100%; margin-top: 1rem; border-collapse: collapse; background: #fff; }
+th, td { padding: .8rem; text-align: left; border-bottom: 1px solid #e7e1d7; vertical-align: middle; }
+th { color: #fff; background: #2f6f5e; }
+tbody tr:hover { background: #faf8f4; }
+td a { margin-right: .35rem; }
+td button { margin: .2rem; padding: .45rem .65rem; font-size: .85rem; }
+
+.alert { margin: 1rem 0; padding: .85rem 1rem; border-radius: .7rem; border: 1px solid; }
+.alert-error { color: #8c2118; background: #fff0ee; border-color: #efc4bf; }
+.alert-success { color: #235d46; background: #edf8f3; border-color: #bfe0d0; }
+.loader { display: flex; align-items: center; gap: .7rem; padding: 1rem 0; color: #54635e; }
+.loader-spinner { width: 1.1rem; height: 1.1rem; border: 3px solid #cadbd4; border-top-color: #2f6f5e; border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+dl { display: grid; grid-template-columns: minmax(8rem, 12rem) 1fr; gap: .55rem 1rem; }
+dt { font-weight: 750; color: #40534c; }
+dd { margin: 0; }
+
+@media (max-width: 800px) {
+    .app-header { flex-wrap: wrap; gap: .75rem 1rem; }
+    .app-header nav { order: 3; flex-basis: 100%; overflow-x: auto; }
+    .session-actions { margin-left: auto; }
+    table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+@media (max-width: 520px) {
+    .app-content { width: min(100% - 1rem, 1180px); padding-top: .75rem; }
+    .card { border-radius: .75rem; }
+    .session-actions span { display: none; }
+    dl { grid-template-columns: 1fr; }
+    dd { margin-bottom: .5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; }
+}

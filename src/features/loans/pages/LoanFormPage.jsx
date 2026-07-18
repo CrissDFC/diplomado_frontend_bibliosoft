@@ -4,6 +4,9 @@ import { BOOK_STATUS, USER_STATUS } from '../../../constants/statuses'
 import { getBooks } from '../../books/bookService'
 import LoanForm from '../components/LoanForm'
 import { createLoan, getUsers } from '../loanService'
+import Alert from '../../../components/ui/Alert'
+import Card from '../../../components/ui/Card'
+import Loader from '../../../components/ui/Loader'
 
 const initialFormData = {
     bookId: '',
@@ -89,17 +92,17 @@ function LoanFormPage() {
     )
 
     if (isLoading) {
-        return <p>Cargando datos del prestamo...</p>
+        return <Loader message="Cargando datos del préstamo..." />
     }
 
     return (
-        <section>
+        <Card>
             <div>
                 <h1>Nuevo prestamo</h1>
                 <p>Registra un nuevo prestamo de libro.</p>
             </div>
 
-            {errorMessage && <p>{errorMessage}</p>}
+            <Alert>{errorMessage}</Alert>
 
             <LoanForm
                 formData={formData}
@@ -110,7 +113,7 @@ function LoanFormPage() {
                 isSubmitting={isSubmitting}
                 submitLabel="Registrar prestamo"
             />
-        </section>
+        </Card>
     )
 }
 

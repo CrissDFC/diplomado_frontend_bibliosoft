@@ -4,6 +4,9 @@ import { LOAN_STATUS } from '../../../constants/statuses'
 import { getBookById } from '../../books/bookService'
 import { getLoanById, getUserById } from '../loanService'
 import { getSession } from '../../auth/session'
+import Alert from '../../../components/ui/Alert'
+import Card from '../../../components/ui/Card'
+import Loader from '../../../components/ui/Loader'
 
 const LOAN_STATUS_LABELS = {
     [LOAN_STATUS.CANCELLED]: 'Cancelado',
@@ -45,15 +48,15 @@ function LoanDetailPage() {
     }, [id])
 
     if (isLoading) {
-        return <p>Cargando prestamo...</p>
+        return <Loader message="Cargando préstamo..." />
     }
 
     if (errorMessage) {
-        return <p>{errorMessage}</p>
+        return <Alert>{errorMessage}</Alert>
     }
 
     return (
-        <section>
+        <Card>
             <div>
                 <h1>Prestamo #{loan.id}</h1>
                 <p>Detalle del prestamo registrado.</p>
@@ -83,7 +86,7 @@ function LoanDetailPage() {
                 <Link to="/prestamos">Volver</Link>
                 {canManage && <Link to={`/prestamos/${loan.id}/editar`}>Editar</Link>}
             </div>
-        </section>
+        </Card>
     )
 }
 

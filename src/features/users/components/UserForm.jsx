@@ -1,3 +1,5 @@
+import Button from '../../../components/ui/Button'
+
 function UserForm({
     formData,
     onInputChange,
@@ -83,13 +85,13 @@ function UserForm({
                 </select>
             </div>
 
-            <button
+            <Button
                 type="submit"
                 className="user-button"
                 disabled={isSubmitting}
             >
                 {isSubmitting ? 'Guardando...' : submitLabel}
-            </button>
+            </Button>
 
         </form>
 

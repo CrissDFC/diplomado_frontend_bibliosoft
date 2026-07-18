@@ -1,3 +1,5 @@
+import Button from '../../../components/ui/Button'
+
 function BookForm({
                       formData,
                       onInputChange,
@@ -104,9 +106,9 @@ function BookForm({
                 />
             </div>
 
-            <button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Guardando...' : submitLabel}
-            </button>
+            </Button>
         </form>
     )
 }
